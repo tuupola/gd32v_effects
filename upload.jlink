@@ -1,0 +1,6 @@
+halt
+loadfile firmware.hex
+r
+setPC 0x08000000
+go
+q
