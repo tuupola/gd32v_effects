@@ -1,9 +1,7 @@
 TARGET = firmware
-# RTOS = FreeRTOS
 NUCLEI_SDK_ROOT = ../nuclei-sdk
-SRCDIRS = . src components/hagl/src components/hagl_gd32v_mipi/src
-INCDIRS = . include components/hagl/include components/hagl_gd32v_mipi/include
-# COMMON_FLAGS := -O2 --std=gnu99 -D_POSIX_C_SOURCE=199309
+SRCDIRS = . lib/hagl/src lib/hagl_hal/src
+INCDIRS = . lib/hagl/include lib/hagl_hal/include
 COMMON_FLAGS := -O2 --std=gnu99
 LDFLAGS = -lm
 

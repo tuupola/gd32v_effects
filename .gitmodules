@@ -1,6 +1,6 @@
 [submodule "components/hagl"]
-	path = components/hagl
+	path = lib/hagl
 	url = https://github.com/tuupola/hagl
-[submodule "components/hagl_gd32v_mipi"]
-	path = components/hagl_gd32v_mipi
+[submodule "lib/hagl_hal"]
+	path = lib/hagl_hal
 	url = git@github.com:tuupola/hagl_gd32v_mipi.git
