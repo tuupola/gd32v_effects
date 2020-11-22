@@ -32,7 +32,7 @@ SPDX-License-Identifier: MIT-0
 
 #include "plasma.h"
 
-color_t *palette;
+color_t palette[256];
 
 static const uint8_t SPEED = 4;
 static const uint8_t STEP = 1;
@@ -83,8 +83,6 @@ uint16_t find_color(color_t color, uint16_t hint)
 
 void plasma_init()
 {
-    palette = malloc(256 * sizeof(color_t));
-
     /* Generate nice continous palette with unique colors. */
     uint16_t index = 0;
     uint16_t counter = 0;
