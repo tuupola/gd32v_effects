@@ -36,7 +36,7 @@ SPDX-License-Identifier: MIT-0
 #include <hagl_hal.h>
 #include <hagl.h>
 #include <font6x9.h>
-#include <fps.h>
+#include <aps.h>
 
 #include "metaballs.h"
 #include "plasma.h"
@@ -48,7 +48,7 @@ static char demo[3][32] = {
     "ROTOZOOM",
 };
 
-static float fb_fps;
+static float effect_fps;
 static uint8_t effect = 2;
 static bitmap_t *bb;
 static uint32_t irq_count = 0;
@@ -107,7 +107,7 @@ void main()
     hagl_set_clip_window(0, 20, DISPLAY_WIDTH - 1, DISPLAY_HEIGHT - 21);
 
     switch_flag = 1;
-    fb_fps = fps();
+    effect_fps = aps(1);
 
     while (1) {
         switch(effect) {
@@ -125,11 +125,11 @@ void main()
         }
 
         hagl_flush();
-        fb_fps = fps();
+        effect_fps = aps(1);
 
         if (switch_flag) {
             switch_flag = 0;
-            printf("%s at %d FPS\r\n", demo[effect], (uint32_t)fb_fps);
+            printf("%s at %d FPS\r\n", demo[effect], (uint32_t)effect_fps);
             effect = (effect + 1) % 3;
 
             switch(effect) {
@@ -149,12 +149,14 @@ void main()
             hagl_set_clip_window(0, 0, DISPLAY_WIDTH - 1, DISPLAY_HEIGHT - 1);
             hagl_put_text(message, 4, 4, green, font6x9);
             hagl_set_clip_window(0, 20, DISPLAY_WIDTH - 1, DISPLAY_HEIGHT - 21);
+
+            aps(APS_RESET);
         }
 
         if (fps_flag) {
             fps_flag = 0;
             /* Print the message on lower right corner. */
-            swprintf(message, sizeof(message), L"%.*f FPS  ", 0, fb_fps);
+            swprintf(message, sizeof(message), L"%.*f FPS  ", 0, effect_fps);
             hagl_set_clip_window(0, 0, DISPLAY_WIDTH - 1, DISPLAY_HEIGHT - 1);
             hagl_put_text(message, DISPLAY_WIDTH - 40, DISPLAY_HEIGHT - 14, green, font6x9);
             hagl_set_clip_window(0, 20, DISPLAY_WIDTH - 1, DISPLAY_HEIGHT - 21);
