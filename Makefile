@@ -1,11 +1,10 @@
 TARGET = firmware
 NUCLEI_SDK_ROOT = ../nuclei-sdk
-#NUCLEI_SDK_ROOT = ../nuclei-sdk-roman
 SRCDIRS = . lib/hagl/src lib/hagl_hal/src
 INCDIRS = . lib/hagl/include lib/hagl_hal/include
 COMMON_FLAGS += -O2 --std=gnu99 -DHAGL_HAL_USE_DOUBLE_BUFFER
 LDFLAGS += -lm
-
+LINKER_SCRIPT = gd32vf103cbt6.ld
 PFLOAT = 1
 JLINK = JLinkExe
 
