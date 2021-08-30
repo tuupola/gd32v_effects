@@ -1,5 +1,7 @@
 TARGET = firmware
 NUCLEI_SDK_ROOT = ../nuclei-sdk
+# Remove comment if using macOS and toolchain was installed from Homebrew
+#COMPILE_PREFIX = riscv64-unknown-elf-
 SRCDIRS = . lib/hagl/src lib/hagl_hal/src
 INCDIRS = . lib/hagl/include lib/hagl_hal/include
 COMMON_FLAGS += -O2 --std=gnu99 -DHAGL_HAL_USE_DOUBLE_BUFFER
