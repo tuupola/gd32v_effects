@@ -41,11 +41,13 @@ SPDX-License-Identifier: MIT-0
 #include "metaballs.h"
 #include "plasma.h"
 #include "rotozoom.h"
+#include "deform.h"
 
-static char demo[3][32] = {
+static char demo[4][32] = {
     "METABALLS",
     "PLASMA",
     "ROTOZOOM",
+    "DEFORM",
 };
 
 static float effect_fps;
@@ -61,8 +63,8 @@ void eclic_mtip_handler(void)
     uint64_t now = SysTimer_GetLoadValue();
     SysTimer_SetCompareValue(now + 2 * SOC_TIMER_FREQ);
 
-    /* Demo is changed every ten IRQs. */
-    if (0 == (++irq_count % 10)) {
+    /* Demo is changed every five IRQs. */
+    if (0 == (++irq_count % 5)) {
         switch_flag = 1;
     } else {
         fps_flag = 1;
@@ -111,7 +113,7 @@ void main()
 
     while (1) {
         switch(effect) {
-        case 0:
+        case 6:
             metaballs_animate();
             metaballs_render();
             break;
@@ -122,6 +124,10 @@ void main()
             rotozoom_animate();
             rotozoom_render();
             break;
+        case 3:
+            deform_animate();
+            deform_render();
+            break;
         }
 
         hagl_flush();
@@ -130,7 +136,7 @@ void main()
         if (switch_flag) {
             switch_flag = 0;
             printf("%s at %d FPS\r\n", demo[effect], (uint32_t)effect_fps);
-            effect = (effect + 1) % 3;
+            effect = (effect + 1) % 4;
 
             switch(effect) {
             case 0:
@@ -141,6 +147,9 @@ void main()
                 break;
             case 2:
                 // rotozoom_init();
+                break;
+            case 3:
+                deform_init();
                 break;
             }
 
@@ -164,4 +173,3 @@ void main()
         }
     }
 }
-
