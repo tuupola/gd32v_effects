@@ -35,7 +35,6 @@ SPDX-License-Identifier: MIT-0
 
 #include <hagl_hal.h>
 #include <hagl.h>
-#include <backend.h>
 #include <font6x9.h>
 #include <fps.h>
 #include <aps.h>
@@ -55,7 +54,7 @@ static fps_instance_t fps;
 static aps_instance_t bps;
 
 static uint8_t effect = 2;
-static bitmap_t *bb;
+static hagl_bitmap_t *bb;
 static uint32_t irq_count = 0;
 static uint8_t switch_flag = 0;
 static uint8_t fps_flag = 0;
@@ -94,7 +93,6 @@ void systimer_init()
     SysTimer_SetCompareValue(future);
 }
 
-
 void main()
 {
     display = hagl_init();
@@ -106,17 +104,11 @@ void main()
     systimer_init();
 
     fps_init(&fps);
-    // if (d) {
-    //     printf("Back buffer: %dx%dx%d\r\n", bb->width, bb->height, bb->depth);
-    // } else {
-    //     printf("No back buffer\r\n");
-    // }
 
     hagl_clear(display);
-    hagl_set_clip_window(display, 0, 20, DISPLAY_WIDTH - 1, DISPLAY_HEIGHT - 21);
+    hagl_set_clip(display, 0, 20, DISPLAY_WIDTH - 1, DISPLAY_HEIGHT - 21);
 
     switch_flag = 1;
-    // effect_fps = aps(1);
 
     while (1) {
         switch(effect) {
@@ -155,9 +147,9 @@ void main()
 
             /* Print the message on top left corner. */
             swprintf(message, sizeof(message), L"%s    ", demo[effect]);
-            hagl_set_clip_window(display, 0, 0, DISPLAY_WIDTH - 1, DISPLAY_HEIGHT - 1);
+            hagl_set_clip(display, 0, 0, DISPLAY_WIDTH - 1, DISPLAY_HEIGHT - 1);
             hagl_put_text(display, message, 4, 4, green, font6x9);
-            hagl_set_clip_window(display, 0, 20, DISPLAY_WIDTH - 1, DISPLAY_HEIGHT - 21);
+            hagl_set_clip(display, 0, 20, DISPLAY_WIDTH - 1, DISPLAY_HEIGHT - 21);
 
             fps_reset(&fps);
         }
@@ -166,9 +158,9 @@ void main()
             fps_flag = 0;
             /* Print the message on lower right corner. */
             swprintf(message, sizeof(message), L"%.*f FPS  ", 0, fps.current);
-            hagl_set_clip_window(display, 0, 0, DISPLAY_WIDTH - 1, DISPLAY_HEIGHT - 1);
+            hagl_set_clip(display, 0, 0, DISPLAY_WIDTH - 1, DISPLAY_HEIGHT - 1);
             hagl_put_text(display, message, DISPLAY_WIDTH - 40, DISPLAY_HEIGHT - 14, green, font6x9);
-            hagl_set_clip_window(display, 0, 20, DISPLAY_WIDTH - 1, DISPLAY_HEIGHT - 21);
+            hagl_set_clip(display, 0, 20, DISPLAY_WIDTH - 1, DISPLAY_HEIGHT - 21);
 
         }
     }
