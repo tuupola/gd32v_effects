@@ -32,7 +32,7 @@ SPDX-License-Identifier: MIT-0
 
 #include "plasma.h"
 
-color_t palette[256];
+hagl_color_t palette[256];
 
 static const uint8_t SPEED = 4;
 static const uint8_t STEP = 1;
@@ -51,7 +51,7 @@ static inline int max(int a, int b) {
     return b;
 }
 
-uint16_t find_color(color_t color, uint16_t hint)
+uint16_t find_color(hagl_color_t color, uint16_t hint)
 {
     uint8_t index;
     uint16_t upper = min(256, hint + SPEED * 2);
@@ -93,7 +93,7 @@ void plasma_init(hagl_backend_t const *display)
         r = 128.0 + 128.0 * sin((M_PI * counter / 128.0) + 1);
         g = 128.0 + 128.0 * sin((M_PI * counter / 64.0) + 1);
         b = 64;
-        color_t color = hagl_color(display, r, g, b);
+        hagl_color_t color = hagl_color(display, r, g, b);
 
         if (0 == index) {
             palette[index] = color;
@@ -125,7 +125,7 @@ void plasma_render(hagl_backend_t const *display)
         for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + STEP) {
 
             /* Find the pixels color index from the palette. */
-            color_t color = hagl_get_pixel(display, x, y);
+            hagl_color_t color = hagl_get_pixel(display, x, y);
             uint16_t index = find_color(color, previous);
             previous = index;
 

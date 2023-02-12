@@ -97,7 +97,7 @@ void main()
 {
     display = hagl_init();
 
-    color_t green = hagl_color(display, 0, 255, 0);
+    hagl_color_t green = hagl_color(display, 0, 255, 0);
     wchar_t message[32];
 
     printf("Hello\r\n");
