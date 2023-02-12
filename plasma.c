@@ -81,7 +81,7 @@ uint16_t find_color(color_t color, uint16_t hint)
     return 0;
 }
 
-void plasma_init()
+void plasma_init(hagl_backend_t const *display)
 {
     /* Generate nice continous palette with unique colors. */
     uint16_t index = 0;
@@ -93,7 +93,7 @@ void plasma_init()
         r = 128.0 + 128.0 * sin((M_PI * counter / 128.0) + 1);
         g = 128.0 + 128.0 * sin((M_PI * counter / 64.0) + 1);
         b = 64;
-        color_t color = hagl_color(r, g, b);
+        color_t color = hagl_color(display, r, g, b);
 
         if (0 == index) {
             palette[index] = color;
@@ -113,19 +113,19 @@ void plasma_init()
                 /* Calculate average of the three sinusoids */
                 /* and use it as color. */
                 uint8_t color = (v1 + v2 + v3) / 3;
-                hagl_put_pixel(x, y, palette[color]);
+                hagl_put_pixel(display, x, y, palette[color]);
         }
     }
 }
 
-void plasma_render()
+void plasma_render(hagl_backend_t const *display)
 {
     static uint16_t previous = 0;
     for (uint16_t x = 0; x < DISPLAY_WIDTH; x = x + STEP) {
         for (uint16_t y = 0; y < DISPLAY_HEIGHT; y = y + STEP) {
 
             /* Find the pixels color index from the palette. */
-            color_t color = hagl_get_pixel(x, y);
+            color_t color = hagl_get_pixel(display, x, y);
             uint16_t index = find_color(color, previous);
             previous = index;
 
@@ -133,7 +133,7 @@ void plasma_render()
             index += SPEED;
             index %= 256;
 
-            hagl_put_pixel(x, y, palette[index]);
+            hagl_put_pixel(display, x, y, palette[index]);
 
             // if (1 == STEP) {
             //     hagl_put_pixel(x, y, palette[index]);

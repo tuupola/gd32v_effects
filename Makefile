@@ -7,6 +7,7 @@ INCDIRS = . lib/hagl/include lib/hagl_hal/include
 COMMON_FLAGS += -O2 --std=gnu99
 # For Longan Nano
 COMMON_FLAGS += -DHAGL_HAL_USE_DOUBLE_BUFFER #-include ./longan_nano.h
+#COMMON_FLAGS += -DHAGL_HAL_USE_SINGLE_BUFFER #-include ./longan_nano.h
 # For TTGO T-Display GD32.
 # This will be slow since there is not enough memory for double buffering.
 # COMMON_FLAGS += -include ./ttgo_t_display.h
